@@ -1,7 +1,7 @@
 package ru.boiko.se;
 
 public class Team {
-    public Teammates[] teammates;
+    private Teammates[] teammates;
     private int volTeam;
 
     public void addTeammate(Teammates Teammate) {
@@ -16,6 +16,10 @@ public class Team {
     public Team(int courseLength) {
         teammates = new Teammates[courseLength];
         volTeam = 0;
+    }
+
+    public Teammates[] getTeam() {
+        return this.teammates;
     }
 
     public void showTeamList() {

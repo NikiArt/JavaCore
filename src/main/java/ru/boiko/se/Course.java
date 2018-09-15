@@ -21,7 +21,7 @@ public class Course {
 
     public void doIt(Team team) {
 
-        for (Teammates t : team.teammates) {
+        for (Teammates t : team.getTeam()) {
             double maxDistance = 0;
             for (Trial c : course) {
                 if ("jump".equals(c.action)) {
