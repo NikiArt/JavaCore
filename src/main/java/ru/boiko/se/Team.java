@@ -1,13 +1,35 @@
 package ru.boiko.se;
 
 public class Team {
-    private String[] team = new String[4];
+    public Teammates[] teammates;
+    private int volTeam;
 
-    public Team(String playerOne, String playerTwo, String playerThree, String playerFour, ) {
-        /*team[0] = playerOne;
-        team[1] = playerTwo;
-        team[2] = playerThree;
-        team[3] = playerFour;*/
+    public void addTeammate(Teammates Teammate) {
+        if(volTeam < teammates.length) {
+            teammates[volTeam] = Teammate;
+            volTeam++;
+        } else {
+            System.out.println("Превышено допустимое количество участников в команде");
+        }
     }
 
+    public Team(int courseLength) {
+        teammates = new Teammates[courseLength];
+        volTeam = 0;
+    }
+
+    public void showTeamList() {
+        for( Teammates t : this.teammates) {
+            System.out.println("" + t.name + " может пробежать " + t.run + "м. и перепрыгнуть препятствие высотой до " + t.jump + "м.");
+        }
+    }
+
+    public void showResults() {
+        System.out.println("\n");
+        for( Teammates t : this.teammates) {
+            if(t.endCourse) {
+                System.out.println("" + t.name + " прошел полосу препятствий");
+            }
+        }
+    }
 }
