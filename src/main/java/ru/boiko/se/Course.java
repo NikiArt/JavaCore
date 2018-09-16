@@ -13,14 +13,12 @@ public class Course {
         }
     }
 
-
     public Course(int courseLength) {
         course = new Trial[courseLength];
         volTrial = 0;
     }
 
     public void doIt(Team team) {
-
         for (Teammates t : team.getTeam()) {
             double maxDistance = 0;
             for (Trial c : course) {

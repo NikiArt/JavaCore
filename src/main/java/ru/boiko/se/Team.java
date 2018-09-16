@@ -4,9 +4,9 @@ public class Team {
     private Teammates[] teammates;
     private int volTeam;
 
-    public void addTeammate(Teammates Teammate) {
+    public void addTeammate(Teammates teammate) {
         if(volTeam < teammates.length) {
-            teammates[volTeam] = Teammate;
+            teammates[volTeam] = teammate;
             volTeam++;
         } else {
             System.out.println("Превышено допустимое количество участников в команде");
