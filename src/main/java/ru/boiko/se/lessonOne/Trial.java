@@ -1,4 +1,4 @@
-package ru.boiko.se;
+package ru.boiko.se.lessonOne;
 
 public class Trial {
     String action;
