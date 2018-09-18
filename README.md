@@ -1,1 +1,1 @@
-# JavaCore
+# javacore
