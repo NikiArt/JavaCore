@@ -15,14 +15,12 @@ public class ConvertAndSum {
     }
 
     private static int ConvertSum(String[][] myArr){
+        String regex = "\\d+";
         int sum = 0;
         for(int i = 0; i < myArr.length; i++) {
             for(int j = 0; j < myArr[i].length; j++) {
-                try {
-                    sum += Integer.parseInt(myArr[i][j]);
-                } catch (NumberFormatException e) {
-                    throw new MyArrayDataException(i, j, myArr[i][j]);
-                }
+                if(!myArr[i][j].matches(regex)) throw new MyArrayDataException(i, j, myArr[i][j]);
+                sum += Integer.parseInt(myArr[i][j]);
             }
         }
         return sum;
