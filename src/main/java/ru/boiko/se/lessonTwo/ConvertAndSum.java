@@ -1,15 +1,15 @@
-package ru.boiko.se.lessonTwo;
+package ru.boiko.se.lessontwo;
 
 public class ConvertAndSum {
     private static int arrX = 4;                //настройка ожидаемого размера массива
     private static int arrY= 4;                 //настройка ожидаемого размера массива
     private static int strMaxLength = 2;        //установка максимальной длины значения в ячейках массива
-    public String[][] myArr;
+    public String[][] myArray;
 
     public static void main(String[] args){
         String[][] myArr = createArr( 4, 4, true);   //формируем массив. num - только числа или все символы
         try{
-            System.out.println("Сумма всех элементов массива равна: " + сonvertSum(myArr));
+            System.out.println("Сумма всех элементов массива равна: " + convertSum(myArr));
         }catch (MyArraySizeException e){
             System.out.println(e.getMessage() + "\nСоздайте массив " + arrX + " на " + arrY);
         }catch (MyArrayDataException e){
@@ -17,14 +17,14 @@ public class ConvertAndSum {
         }
     }
 
-    private static int сonvertSum(String[][] myArr) throws MyArrayDataException, MyArraySizeException{
-        if (!checkLengthArr(myArr)) throw new MyArraySizeException();
+    private static int convertSum(String[][] myArray) throws MyArrayDataException, MyArraySizeException{
+        if (!checkLengthArr(myArray)) throw new MyArraySizeException();
         String regex = "\\d+";
         int sum = 0;
-        for(int i = 0; i < myArr.length; i++){
-            for(int j = 0; j < myArr[i].length; j++){
-                if(!myArr[i][j].matches(regex)) throw new MyArrayDataException(i, j, myArr[i][j]);
-                sum += Integer.parseInt(myArr[i][j]);
+        for(int i = 0; i < myArray.length; i++){
+            for(int j = 0; j < myArray[i].length; j++){
+                if(!myArray[i][j].matches(regex)) throw new MyArrayDataException(i, j, myArray[i][j]);
+                sum += Integer.parseInt(myArray[i][j]);
             }
         }
         return sum;
@@ -40,12 +40,12 @@ public class ConvertAndSum {
 
     private static String[][] createArr(int x, int y, boolean num){
         StringBuilder notify = new StringBuilder("Текущий массив:\n");
-        String[][] myArr = new String[x][y];                        //создаем массив
+        String[][] myArray = new String[x][y];                        //создаем массив
         String numbers = "0123456789";                              //строка из цифр для формирования "строковых" чисел
         String symbols =  "0123456789qwer";                         //строка из символов для формирвоания любой строки
-        for(int i = 0; i < myArr.length; i++){                      //циклы для заполнения массива
+        for(int i = 0; i < myArray.length; i++){                      //циклы для заполнения массива
             notify.append("[\t");
-            for(int j = 0; j < myArr[i].length; j++){
+            for(int j = 0; j < myArray[i].length; j++){
                 StringBuilder newString = new StringBuilder();
                 int strLength = 1 + (int)(Math.random()*(strMaxLength));  //случайная длина текущей строки от 1
                 for(int l = 0; l < strLength; l++){                       //до максимальной длины, указанной в константе
@@ -58,11 +58,11 @@ public class ConvertAndSum {
                     }
                 }
                 notify.append(newString).append("\t");
-                myArr[i][j] = newString.toString();                                            //сбор строки
+                myArray[i][j] = newString.toString();                                            //сбор строки
             }
             notify.append("]\n");
         }
         System.out.println(notify);
-        return myArr;
+        return myArray;
     }
 }

@@ -1,4 +1,4 @@
-package ru.boiko.se.lessonTwo;
+package ru.boiko.se.lessontwo;
 
 public class MyArrayDataException extends Exception{
     public MyArrayDataException(int x, int y, String arg){

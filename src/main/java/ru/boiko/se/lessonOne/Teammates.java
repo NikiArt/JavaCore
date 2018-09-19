@@ -1,4 +1,4 @@
-package ru.boiko.se.lessonOne;
+package ru.boiko.se.lessonone;
 
 public class Teammates {
     public String name;
