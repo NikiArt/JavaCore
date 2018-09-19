@@ -1,6 +1,6 @@
 package ru.boiko.se.lessonTwo;
 
-public class MyArrayDataException extends Exception{
+public class MyArrayDataException extends NumberFormatException{
     public MyArrayDataException() {
         super("Не удается преобразовать значение в число.");
     }
