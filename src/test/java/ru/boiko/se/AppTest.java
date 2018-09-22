@@ -17,4 +17,11 @@ public class AppTest
     {
         assertTrue( true );
     }
+
+    @Test
+    public void newArr()
+    {
+        char[][] arr = new char[5][3];
+        System.out.println(arr.length + " " + arr[0].length);
+    }
 }
