@@ -5,10 +5,11 @@ import java.util.*;
 public class App {
     public static void main(String[] args) {
 
+        //Задание перовое
         String[] wordsArray = {"alfa", "zulu", "bravo", "gamma", "alfa", "charlie", "alfa", "zulu", "alfa", "alfa", "zulu", "zulu", "bravo", "lima"};
         Map<String, Integer> map = new HashMap<>();
 
-        for (int i = 0; i < wordsArray.length; i++) {
+        for(int i = 0; i < wordsArray.length; i++) {
             if (map.containsKey(wordsArray[i])) {
                 map.put(wordsArray[i], map.get(wordsArray[i]) + 1);
             } else {
@@ -17,9 +18,24 @@ public class App {
 
         }
 
-        for (Map.Entry < String, Integer > o : map.entrySet()) {
+        for(Map.Entry<String, Integer> o : map.entrySet()) {
             System.out.println(o.getKey() + " встречается " + o.getValue() + " раз" + ((o.getValue() % 10 < 2 || o.getValue() % 10 >= 5) ? "." : "a."));
         }
+
+        //Задание второе
+        Phonebook phonebook = new Phonebook();
+        phonebook.add("John", "89111234567");
+        phonebook.add("Richard", "89119876543");
+        phonebook.add("Walter", "89211237767");
+        phonebook.add("John", "89052056819");
+        phonebook.add("Richard", "89855429678");
+        phonebook.add("Freddy", "89855429321");
+        phonebook.add("John", "89033031315");
+
+        phonebook.get("John");
+        phonebook.get("Walter");
+        phonebook.get("Richard");
+        phonebook.get("Adam");
     }
 
 }
