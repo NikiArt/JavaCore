@@ -50,7 +50,7 @@ public class AppTest extends JFrame
 
 
     @Test
-    public static void main(String[] args) {
+    public void app() {
         AppTest window = new AppTest();
         window.setVisible(true);
     }
