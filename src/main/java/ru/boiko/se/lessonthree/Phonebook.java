@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Phonebook {
-    private  Map<String, String> phones = new HashMap<>();
+    private final Map<String, String> phones = new HashMap<>();
 
     public void add(String name, String phone){
         phones.put(phone, name);

@@ -29,8 +29,8 @@ public class AppTest
     @Test
     public void main() {
 
-        String[] wordsArray = {"alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa", "zulu", "bravo", "gamma", "alfa", "charlie", "alfa", "zulu"};
-        Map<String, Integer> map = new HashMap<>();
+        final String[] wordsArray = {"alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa","alfa", "zulu", "bravo", "gamma", "alfa", "charlie", "alfa", "zulu"};
+        final Map<String, Integer> map = new HashMap<>();
 
         for (int i = 0; i < wordsArray.length; i++){
             if (map.containsKey(wordsArray[i])) {

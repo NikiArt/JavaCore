@@ -6,11 +6,11 @@ public class App {
     public static void main(String[] args) {
 
         //Задание перовое
-        String[] wordsArray = {"alfa", "zulu", "bravo", "gamma", "alfa", "charlie", "alfa", "zulu", "alfa", "alfa", "zulu", "zulu", "bravo", "lima"};
-        Map<String, Integer> map = new HashMap<>();
+        final String[] wordsArray = {"alfa", "zulu", "bravo", "gamma", "alfa", "charlie", "alfa", "zulu", "alfa", "alfa", "zulu", "zulu", "bravo", "lima"};
+        final Map<String, Integer> map = new HashMap<>();
 
         for(int i = 0; i < wordsArray.length; i++) {
-            if (map.containsKey(wordsArray[i])) {
+            if(map.containsKey(wordsArray[i])) {
                 map.put(wordsArray[i], map.get(wordsArray[i]) + 1);
             } else {
                 map.put(wordsArray[i], 1);
@@ -23,7 +23,7 @@ public class App {
         }
 
         //Задание второе
-        Phonebook phonebook = new Phonebook();
+        final Phonebook phonebook = new Phonebook();
         phonebook.add("John", "89111234567");
         phonebook.add("Richard", "89119876543");
         phonebook.add("Walter", "89211237767");
