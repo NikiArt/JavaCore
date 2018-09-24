@@ -4,13 +4,15 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class AppTest extends JFrame
 {
     /**
      * Rigorous Test :-)
@@ -44,6 +46,30 @@ public class AppTest
         for (Map.Entry < String, Integer > o : map.entrySet()) {
             System.out.println(o.getKey() + " встречается " + o.getValue() + " раз" + ((o.getValue() % 10 < 2 || o.getValue() % 10 >= 5) ? "." : "a."));
         }
+    }
+
+
+    @Test
+    public static void main(String[] args) {
+        AppTest window = new AppTest();
+        window.setVisible(true);
+    }
+
+    public AppTest() {
+        setTitle("Test Window");
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setBounds(0, 0, 400, 400);
+        JButton[] jbs = new JButton[5];
+        for (int i = 0; i < 5; i++) {
+            jbs[i] = new JButton("#" + i);
+        }
+        setLayout(new BorderLayout());   // выбор компоновщика элементов
+        add(jbs[0], BorderLayout.EAST);  // добавление кнопки на форму
+        add(jbs[1], BorderLayout.WEST);
+        add(jbs[2], BorderLayout.SOUTH);
+        add(jbs[3], BorderLayout.NORTH);
+        add(jbs[4], BorderLayout.CENTER);
+        //setVisible(true);
     }
 
 }
