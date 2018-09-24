@@ -49,27 +49,33 @@ public class AppTest extends JFrame
     }
 
 
-    @Test
-    public void app() {
-        AppTest window = new AppTest();
-        window.setVisible(true);
-    }
+    private JTextArea chatMess;
+    private JTextField enterMessage;
 
-    public AppTest() {
-        setTitle("Test Window");
+    @Test
+    public void appFrameTest() {
+        setTitle("Сетевой чат");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setBounds(0, 0, 400, 400);
-        JButton[] jbs = new JButton[5];
-        for (int i = 0; i < 5; i++) {
-            jbs[i] = new JButton("#" + i);
-        }
-        setLayout(new BorderLayout());   // выбор компоновщика элементов
-        add(jbs[0], BorderLayout.EAST);  // добавление кнопки на форму
-        add(jbs[1], BorderLayout.WEST);
-        add(jbs[2], BorderLayout.SOUTH);
-        add(jbs[3], BorderLayout.NORTH);
-        add(jbs[4], BorderLayout.CENTER);
-        //setVisible(true);
+        final JPanel chatPanel = new JPanel(new BorderLayout());
+        setBounds(500, 500, 600, 400);
+        final JButton answerButton = new JButton("Отправить");
+       // answerButton.addActionListener(event -> send());
+        chatMess = new JTextArea();
+        chatMess.setEditable(false);
+        chatMess.setLineWrap(true);
+        chatMess.setWrapStyleWord(true);
+        JScrollPane chatScroll = new JScrollPane(chatMess);
+        enterMessage = new JTextField(33);
+       // enterMessage.addActionListener(event -> send());
+        enterMessage.setSize(50, 20);
+        final JPanel footer = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        footer.add(new JLabel("Ваше сообщение:"));
+        footer.add(enterMessage);
+        footer.add(answerButton);
+        chatPanel.add(chatScroll,BorderLayout.CENTER);
+        chatPanel.add(footer, BorderLayout.SOUTH);
+        add(chatPanel);
+        setVisible(true);
     }
 
 }
