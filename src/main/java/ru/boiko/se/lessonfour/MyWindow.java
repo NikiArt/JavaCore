@@ -5,7 +5,7 @@ import java.awt.*;
 
 /**
  * Класс создания окна чата
- * @autor Никита Бойко
+ * @author Никита Бойко
  * @version 1.1
  * @see MyWindow - Конструктор создания окна чата
  * @see MyWindow#chatMess - Общее окно всех сообщений
