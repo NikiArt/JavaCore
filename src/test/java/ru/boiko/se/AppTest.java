@@ -78,4 +78,20 @@ public class AppTest extends JFrame
         setVisible(true);
     }
 
+    @Test
+    public void  fillOneThread() {
+        int size = 10000000;
+        float[] array = new float[size];
+        long a = System.currentTimeMillis();
+        for (int i = 0; i < size; i++) {
+            array[i] = (float) (array[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+        }
+        System.out.println("Время выполнения: " + (System.currentTimeMillis() - a) + " мс.");
+        a = System.currentTimeMillis();
+        for(float i : array) {
+            i = (float) (i * Math.sin(0.2f + 1 / 5) * Math.cos(0.2f + 1 / 5) * Math.cos(0.4f + 1 / 2));
+        }
+        System.out.println("Время выполнения: " + (System.currentTimeMillis() - a) + " мс.");
+    }
+
 }
