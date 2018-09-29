@@ -55,7 +55,7 @@ public class App{
     }
 
     @SneakyThrows
-    private static float[] fillTwoThreads(float[] array) throws InterruptedException {
+    private static float[] fillTwoThreads(float[] array) {
         long a = System.currentTimeMillis();
         float[] arrayFirst = new float[h];
         float[] arraySecond = new float[size - h];
