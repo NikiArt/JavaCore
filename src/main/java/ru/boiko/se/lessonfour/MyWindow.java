@@ -49,7 +49,7 @@ public class MyWindow extends JFrame {
     }
 
     private void send(){
-        if(!"".equals(enterMessage.getText())) {
+        if(!enterMessage.getText().isEmpty()) {
             chatMess.append(enterMessage.getText() + "\n");
             enterMessage.setText("");
         }
