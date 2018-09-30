@@ -27,11 +27,10 @@ public class App{
         fillTwoThreads(array);
     }
 
-    private static float[] fill(float[] array, float value){
+    private final static void fill(float[] array, float value){
         for(int i = 0; i < size; i++){
             array[i] = value;
         }
-        return array;
     }
 
     private static void fillOneThread(float[] array) {
@@ -41,12 +40,12 @@ public class App{
 
     @SneakyThrows
     private static void fillTwoThreads(float[] array) {
-        final long a = System.currentTimeMillis();
+        final long startTime = System.currentTimeMillis();
         final float[] arrayFirst = new float[h];
         final float[] arraySecond = new float[size - h];
         System.arraycopy(array, 0, arrayFirst, 0, h);
         System.arraycopy(array, h, arraySecond, 0, size - h);
-        System.out.println("Время деления массива на два новых: " + (System.currentTimeMillis() - a) + " мс.");
+        System.out.println("Время деления массива на два новых: " + (System.currentTimeMillis() - startTime) + " мс.");
 
         final ArrayTask arrayFirstTask = new ArrayTask(arrayFirst, 0);
         final Thread arrayFirstThread = new Thread(arrayFirstTask);
@@ -60,10 +59,10 @@ public class App{
         arrayFirstThread.join();
         arraySecondThread.join();
 
-        final long b = System.currentTimeMillis();
+        final long currentTime = System.currentTimeMillis();
         System.arraycopy(arrayFirstTask.getArray(), 0, array, 0, h);
         System.arraycopy(arraySecondTask.getArray(), 0, array, h, size - h);
-        System.out.println("Время склейки массивов: " + (System.currentTimeMillis() - b) + " мс.");
-        System.out.println("Общее время выполнения: " + (System.currentTimeMillis() - a) + " мс.");
+        System.out.println("Время склейки массивов: " + (System.currentTimeMillis() - currentTime) + " мс.");
+        System.out.println("Общее время выполнения: " + (System.currentTimeMillis() - startTime) + " мс.");
     }
 }

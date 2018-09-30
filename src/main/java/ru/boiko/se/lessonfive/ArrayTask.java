@@ -30,9 +30,9 @@ public class ArrayTask implements Runnable {
     @Override
     @SneakyThrows
     public void run() {
-        final long a = System.currentTimeMillis();
+        final long startTime = System.currentTimeMillis();
         arrayCalc();
-        System.out.println("Время расчета массива: " + (System.currentTimeMillis() - a) + " мс.");
+        System.out.println("Время расчета массива: " + (System.currentTimeMillis() - startTime) + " мс.");
     }
 
     public float[] getArray(){
