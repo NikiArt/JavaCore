@@ -18,7 +18,7 @@ public class App{
          * @see fillOneThread - метод обработки массива в однопоточном режиме
          * @see fillTwoThreads - метод обработки массива в многопоточном режиме
          */
-        float[] array = new float[size];
+        final float[] array = new float[size];
         fill(array, 1);
         System.out.println("Задача 1. Однопоточный расчет значений элементов массива");
         fillOneThread(array);
@@ -33,26 +33,26 @@ public class App{
         }
         return array;
     }
-    
+
     private static void fillOneThread(float[] array) {
         ArrayTask arraySingle = new ArrayTask(array);
         arraySingle.run();
     }
 
     @SneakyThrows
-    private static float[] fillTwoThreads(float[] array) {
-        long a = System.currentTimeMillis();
-        float[] arrayFirst = new float[h];
-        float[] arraySecond = new float[size - h];
+    private static void fillTwoThreads(float[] array) {
+        final long a = System.currentTimeMillis();
+        final float[] arrayFirst = new float[h];
+        final float[] arraySecond = new float[size - h];
         System.arraycopy(array, 0, arrayFirst, 0, h);
         System.arraycopy(array, h, arraySecond, 0, size - h);
         System.out.println("Время деления массива на два новых: " + (System.currentTimeMillis() - a) + " мс.");
 
-        ArrayTask arrayFirstTask = new ArrayTask(arrayFirst, 0);
-        Thread arrayFirstThread = new Thread(arrayFirstTask);
+        final ArrayTask arrayFirstTask = new ArrayTask(arrayFirst, 0);
+        final Thread arrayFirstThread = new Thread(arrayFirstTask);
 
-        ArrayTask arraySecondTask = new ArrayTask(arraySecond, h);
-        Thread arraySecondThread = new Thread(arraySecondTask);
+        final ArrayTask arraySecondTask = new ArrayTask(arraySecond, h);
+        final Thread arraySecondThread = new Thread(arraySecondTask);
 
         arrayFirstThread.start();
         arraySecondThread.start();
@@ -60,12 +60,10 @@ public class App{
         arrayFirstThread.join();
         arraySecondThread.join();
 
-        long b = System.currentTimeMillis();
+        final long b = System.currentTimeMillis();
         System.arraycopy(arrayFirstTask.getArray(), 0, array, 0, h);
         System.arraycopy(arraySecondTask.getArray(), 0, array, h, size - h);
         System.out.println("Время склейки массивов: " + (System.currentTimeMillis() - b) + " мс.");
-
         System.out.println("Общее время выполнения: " + (System.currentTimeMillis() - a) + " мс.");
-        return array;
     }
 }
