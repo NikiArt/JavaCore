@@ -15,18 +15,20 @@ public class Client {
     private Scanner inMsg;
     private PrintWriter out;
 
+    @SneakyThrows
     public Client() {
         Config config = new Config();
         host = config.getHost();
         port = config.getSocket();
-    }
-
-    @SneakyThrows
-    public void run() {
         socket = new Socket(host, port);
         in = new Scanner(socket.getInputStream());
         inMsg = new Scanner(System.in);
         out = new PrintWriter(socket.getOutputStream());
+    }
+
+    @SneakyThrows
+    public void run() {
+
 
         new Thread(new Runnable() {
             @Override
@@ -36,14 +38,20 @@ public class Client {
                     if (inMsg.hasNext()) {
                         String message = inMsg.nextLine();
                         if ("end".equalsIgnoreCase(message)) break;
-                        //System.out.println(message);
                         sendMsg(message);
                     }
+                }
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+            @SneakyThrows
+            public void run() {
+                while (true) {
                     if (in.hasNext()) {
                         String message = in.nextLine();
-                        //if ("end".equalsIgnoreCase(message)) break;
                         System.out.println(message);
-                        //sendMsg(message);
                     }
                 }
             }

@@ -27,15 +27,8 @@ public class Server {
         System.out.println("Сервер запущен, ожидаем подключения...");
     }
 
+    @SneakyThrows
     public final void run() {
-
-        try {
             executor.submit(serverRun);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-/*
-        final Thread serverRunThread = new Thread(serverRun);
-        serverRunThread.start();*/
     }
 }
