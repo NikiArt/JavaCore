@@ -1,39 +1,41 @@
 package ru.boiko.se.lessonsix.server;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import ru.boiko.se.lessonsix.Config;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+@Getter
+@Setter
 public class Server {
-    Config config;
-
-    public Server(){
-        this.config = new Config();
-    }
+    private final ExecutorService executor;
+    private SteamRunner serverRun;
+    private ServerSocket serverSocket;
+    private Config config;
 
     @SneakyThrows
-    public final void run() {
-        ServerSocket server = null;
-        Socket socket = null;
-            server = new ServerSocket(config.getSocket());
-            System.out.println("Сервер запущен, ожидаем подключения...");
-            socket = server.accept();
-            System.out.println("Клиент подключился");
-            Scanner sc = new Scanner(socket.getInputStream());
-            PrintWriter pw = new PrintWriter(socket.getOutputStream());
-            while (true) {
-                String str = sc.nextLine();
-                if (str.equals("end")) break;
-                pw.println("Эхо: " + str);
-                System.out.println("Эхо: " + str);
-                pw.flush();
-            }
+    public Server() {
+        executor = Executors.newCachedThreadPool();
+        this.config = new Config();
+        serverRun = new SteamRunner(this);
 
-            server.close();
+        serverSocket = new ServerSocket(config.getSocket());
+        System.out.println("Сервер запущен, ожидаем подключения...");
+    }
+
+    public final void run() {
+
+        try {
+            executor.submit(serverRun);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+/*
+        final Thread serverRunThread = new Thread(serverRun);
+        serverRunThread.start();*/
     }
 }
