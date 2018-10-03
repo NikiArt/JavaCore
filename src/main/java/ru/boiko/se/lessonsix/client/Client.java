@@ -10,8 +10,9 @@ import java.util.Scanner;
 public class Client {
     private final String host;
     private final int port;
-    private Socket sock;
+    private Socket socket;
     private Scanner in;
+    private Scanner inMsg;
     private PrintWriter out;
 
     public Client() {
@@ -22,20 +23,27 @@ public class Client {
 
     @SneakyThrows
     public void run() {
-        sock = new Socket(host, port);
-        in = new Scanner(sock.getInputStream());
-        out = new PrintWriter(sock.getOutputStream());
+        socket = new Socket(host, port);
+        in = new Scanner(socket.getInputStream());
+        inMsg = new Scanner(System.in);
+        out = new PrintWriter(socket.getOutputStream());
 
         new Thread(new Runnable() {
             @Override
             @SneakyThrows
             public void run() {
                 while (true) {
+                    if (inMsg.hasNext()) {
+                        String message = inMsg.nextLine();
+                        if ("end".equalsIgnoreCase(message)) break;
+                        //System.out.println(message);
+                        sendMsg(message);
+                    }
                     if (in.hasNext()) {
                         String message = in.nextLine();
-                        if ("end".equalsIgnoreCase(message)) break;
+                        //if ("end".equalsIgnoreCase(message)) break;
                         System.out.println(message);
-                        sendMsg(message);
+                        //sendMsg(message);
                     }
                 }
             }
@@ -43,7 +51,7 @@ public class Client {
     }
 
     public void sendMsg(String message) {
-        out.println();
+        out.println(message);
         out.flush();
     }
 

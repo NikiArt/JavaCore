@@ -18,21 +18,22 @@ public class Server {
 
     @SneakyThrows
     public final void run() {
-        ServerSocket serv = null;
-        Socket sock = null;
-            serv = new ServerSocket(config.getSocket());
+        ServerSocket server = null;
+        Socket socket = null;
+            server = new ServerSocket(config.getSocket());
             System.out.println("Сервер запущен, ожидаем подключения...");
-            sock = serv.accept();
+            socket = server.accept();
             System.out.println("Клиент подключился");
-            Scanner sc = new Scanner(sock.getInputStream());
-            PrintWriter pw = new PrintWriter(sock.getOutputStream());
+            Scanner sc = new Scanner(socket.getInputStream());
+            PrintWriter pw = new PrintWriter(socket.getOutputStream());
             while (true) {
                 String str = sc.nextLine();
                 if (str.equals("end")) break;
                 pw.println("Эхо: " + str);
+                System.out.println("Эхо: " + str);
                 pw.flush();
             }
 
-            serv.close();
+            server.close();
     }
 }
