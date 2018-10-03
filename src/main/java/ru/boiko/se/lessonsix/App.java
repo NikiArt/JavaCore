@@ -8,13 +8,13 @@ public class App {
         getApp(args);
     }
 
-    private static void getApp(String[] args){
+    private static void getApp(final String[] args){
         if(args == null || args.length == 0){
-            Client clientRun = new Client();
+            final Client clientRun = new Client();
             clientRun.run();
         }
         if(args.length == 1 && "server".equals(args[0])) {
-            Server serverRun = new Server();
+            final Server serverRun = new Server();
             serverRun.run();
         }
 

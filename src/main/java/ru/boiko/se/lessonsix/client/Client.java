@@ -10,14 +10,14 @@ import java.util.Scanner;
 public class Client {
     private final String host;
     private final int port;
-    private Socket socket;
-    private Scanner in;
-    private Scanner inMsg;
-    private PrintWriter out;
+    private final Socket socket;
+    private final Scanner in;
+    private final Scanner inMsg;
+    private final PrintWriter out;
 
     @SneakyThrows
     public Client() {
-        Config config = new Config();
+        final Config config = new Config();
         host = config.getHost();
         port = config.getSocket();
         socket = new Socket(host, port);
@@ -27,7 +27,7 @@ public class Client {
     }
 
     @SneakyThrows
-    public void run() {
+    public final void run() {
 
 
         new Thread(new Runnable() {
@@ -58,7 +58,7 @@ public class Client {
         }).start();
     }
 
-    public void sendMsg(String message) {
+    private void sendMsg(final String message) {
         out.println(message);
         out.flush();
     }

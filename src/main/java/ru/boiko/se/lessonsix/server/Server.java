@@ -13,9 +13,9 @@ import java.util.concurrent.Executors;
 @Setter
 public class Server {
     private final ExecutorService executor;
-    private SteamRunner serverRun;
-    private ServerSocket serverSocket;
-    private Config config;
+    private final SteamRunner serverRun;
+    private final ServerSocket serverSocket;
+    private final Config config;
 
     @SneakyThrows
     public Server() {
