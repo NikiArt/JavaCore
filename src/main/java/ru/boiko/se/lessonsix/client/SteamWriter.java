@@ -9,7 +9,7 @@ public class SteamWriter implements Runnable {
     private final Scanner broadcastMessage;
 
     @SneakyThrows
-    public SteamWriter(Socket socket){
+    public SteamWriter(final Socket socket){
         broadcastMessage = new Scanner(socket.getInputStream());
     }
 

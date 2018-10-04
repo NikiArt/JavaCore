@@ -8,7 +8,7 @@ public class BroadcastSender implements Runnable {
     private final List<PrintWriter> printWriterList;
     private final Scanner scanner;
 
-    public BroadcastSender(List<PrintWriter> printWriterList, Scanner scanner) {
+    public BroadcastSender(final List<PrintWriter> printWriterList, final Scanner scanner) {
         this.printWriterList = printWriterList;
         this.scanner = scanner;
     }
@@ -27,9 +27,9 @@ public class BroadcastSender implements Runnable {
 
     }
 
-    private void sendMessage(String message){
+    private void sendMessage(final String message){
         for(int i = 0; i < printWriterList.size(); i++) {
-            PrintWriter currentPw = printWriterList.get(i);
+            final PrintWriter currentPw = printWriterList.get(i);
             currentPw.println(message);
             currentPw.flush();
         }

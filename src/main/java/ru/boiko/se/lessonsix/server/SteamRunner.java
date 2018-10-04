@@ -19,7 +19,6 @@ public class SteamRunner implements Runnable{
     public SteamRunner(final Server server) {
         this.server = server;
         executor = Executors.newCachedThreadPool();
-
     }
 
     @Override
@@ -28,8 +27,8 @@ public class SteamRunner implements Runnable{
         final Socket socket = this.server.getServerSocket().accept();
         System.out.println("Клиент подключился");
         final Scanner scanner = new Scanner(socket.getInputStream());
-        final PrintWriter pw = new PrintWriter(socket.getOutputStream());
-        printWriterList.add(pw);
+        final PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
+        printWriterList.add(printWriter);
         executor.submit(new BroadcastSender(printWriterList, scanner));
         this.server.run();
     }

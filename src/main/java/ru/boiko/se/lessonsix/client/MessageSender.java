@@ -7,19 +7,19 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class MessageSender implements Runnable {
-    private final Scanner inMsg;
-    private final PrintWriter out;
+    private final Scanner inMessage;
+    private final PrintWriter outMessage;
 
     @SneakyThrows
-    public MessageSender(Socket socket){
-        inMsg = new Scanner(System.in);
-        out = new PrintWriter(socket.getOutputStream());
+    public MessageSender(final Socket socket){
+        inMessage = new Scanner(System.in);
+        outMessage = new PrintWriter(socket.getOutputStream());
     }
 
     @Override
     public void run() {
-        if (inMsg.hasNext()) {
-            String message = inMsg.nextLine();
+        if (inMessage.hasNext()) {
+            String message = inMessage.nextLine();
             if ("end".equalsIgnoreCase(message)) {
                 sendMsg(message);
                 System.out.println("Вы отключились от чата");
@@ -31,7 +31,7 @@ public class MessageSender implements Runnable {
     }
 
     private void sendMsg(final String message) {
-        out.println(message);
-        out.flush();
+        outMessage.println(message);
+        outMessage.flush();
     }
 }
