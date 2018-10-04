@@ -7,15 +7,19 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SteamRunner implements Runnable{
     private final Server server;
-    private final List<PrintWriter> printWriterList;
+    private final List<PrintWriter> printWriterList = new ArrayList<>();
+    private final ExecutorService executor;
 
     @SneakyThrows
     public SteamRunner(final Server server) {
         this.server = server;
-        this.printWriterList = new ArrayList<PrintWriter>();
+        executor = Executors.newCachedThreadPool();
+
     }
 
     @Override
@@ -23,20 +27,10 @@ public class SteamRunner implements Runnable{
     public void run(){
         final Socket socket = this.server.getServerSocket().accept();
         System.out.println("Клиент подключился");
-        final Scanner sc = new Scanner(socket.getInputStream());
+        final Scanner scanner = new Scanner(socket.getInputStream());
         final PrintWriter pw = new PrintWriter(socket.getOutputStream());
         printWriterList.add(pw);
+        executor.submit(new BroadcastSender(printWriterList, scanner));
         this.server.run();
-        while (true) {
-            String str = sc.nextLine();
-            if (str.equals("end")) break;
-            for(int i = 0; i < printWriterList.size(); i++) {
-                PrintWriter currentPw = printWriterList.get(i);
-                currentPw.println("Эхо: " + str);
-                currentPw.flush();
-            }
-            System.out.println("Эхо: " + str);
-
-        }
     }
 }

@@ -3,6 +3,7 @@ package ru.boiko.se;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import ru.boiko.se.lessonsix.App;
 
 import javax.swing.*;
 import java.awt.*;
@@ -93,5 +94,4 @@ public class AppTest extends JFrame
         }
         System.out.println("Время выполнения: " + (System.currentTimeMillis() - a) + " мс.");
     }
-
 }
