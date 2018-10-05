@@ -11,7 +11,7 @@ public class Config {
     private final Integer socket;
     private final String host;
 
-    public Config(){
+    public Config() {
         socket = 8179;
         host = "localhost";
     }

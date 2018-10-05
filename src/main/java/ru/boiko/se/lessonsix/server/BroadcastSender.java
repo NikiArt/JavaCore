@@ -27,7 +27,7 @@ public class BroadcastSender implements Runnable {
 
     }
 
-    private void sendMessage(final String message){
+    private void sendMessage(final String message) {
         for(int i = 0; i < printWriterList.size(); i++) {
             final PrintWriter currentPw = printWriterList.get(i);
             currentPw.println(message);

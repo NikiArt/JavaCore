@@ -17,11 +17,11 @@ public class App {
     }
 
     private static void getApp(final String[] args){
-        if(args == null || args.length == 0){
+        if(args == null || args.length == 0) {
             try {
                 final Client clientRun = new Client();
                 clientRun.run();
-            }catch(Exception e) {
+            } catch(Exception e) {
                 System.out.println("Не удалось установить соединение с сервером");
             }
         }
@@ -29,6 +29,5 @@ public class App {
             final Server serverRun = new Server();
             serverRun.run();
         }
-
     }
 }

@@ -10,7 +10,7 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class SteamRunner implements Runnable{
+public class SteamRunner implements Runnable {
     private final Server server;
     private final List<PrintWriter> printWriterList = new ArrayList<>();
     private final ExecutorService executor;
@@ -23,7 +23,7 @@ public class SteamRunner implements Runnable{
 
     @Override
     @SneakyThrows
-    public void run(){
+    public void run() {
         final Socket socket = this.server.getServerSocket().accept();
         System.out.println("Клиент подключился");
         final Scanner scanner = new Scanner(socket.getInputStream());

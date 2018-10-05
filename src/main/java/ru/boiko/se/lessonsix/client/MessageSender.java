@@ -11,7 +11,7 @@ public class MessageSender implements Runnable {
     private final PrintWriter outMessage;
 
     @SneakyThrows
-    public MessageSender(final Socket socket){
+    public MessageSender(final Socket socket) {
         inMessage = new Scanner(System.in);
         outMessage = new PrintWriter(socket.getOutputStream());
     }
