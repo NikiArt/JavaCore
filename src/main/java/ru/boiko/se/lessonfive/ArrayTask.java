@@ -17,12 +17,12 @@ public class ArrayTask implements Runnable {
     private final float[] array;
     private final int startValue;
 
-    public ArrayTask(float[] array, int startValue){
+    public ArrayTask(final float[] array, final int startValue) {
         this.array = array;
         this.startValue = startValue;
     }
 
-    public ArrayTask(float[] array){
+    public ArrayTask(float[] array) {
         this.array = array;
         this.startValue = 0;
     }
@@ -39,7 +39,7 @@ public class ArrayTask implements Runnable {
         return this.array;
     }
 
-    private void arrayCalc(){
+    private void arrayCalc() {
         for(int i = 0; i < array.length; i++) {
             array[i] = (float)(array[i] * Math.sin(0.2f + (startValue + i) / 5) * Math.cos(0.2f + (startValue + i) / 5) * Math.cos(0.4f + (startValue + i) / 2));
         }

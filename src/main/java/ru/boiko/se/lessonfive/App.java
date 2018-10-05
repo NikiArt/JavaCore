@@ -27,19 +27,19 @@ public class App{
         fillTwoThreads(array);
     }
 
-    private final static void fill(float[] array, float value){
+    private static void fill(final float[] array, final float value) {
         for(int i = 0; i < size; i++){
             array[i] = value;
         }
     }
 
-    private static void fillOneThread(float[] array) {
+    private static void fillOneThread(final float[] array) {
         ArrayTask arraySingle = new ArrayTask(array);
         arraySingle.run();
     }
 
     @SneakyThrows
-    private static void fillTwoThreads(float[] array) {
+    private static void fillTwoThreads(final float[] array) {
         final long startTime = System.currentTimeMillis();
         final float[] arrayFirst = new float[h];
         final float[] arraySecond = new float[size - h];
