@@ -6,7 +6,14 @@
 
   <groupId>ru.boiko.se</groupId>
   <artifactId>JavaCore</artifactId>
-  <version>1.0.6</version>
+  <version>1.0.7</version>
+  <developers>
+    <developer>
+      <name>NikitaBoiko</name>
+      <email>genertyniki@gmail.com</email>
+      <organization>home</organization>
+    </developer>
+  </developers>
 
   <name>JavaCore</name>
   <!-- FIXME change it to the project's website -->
@@ -84,7 +91,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>ru.boiko.se.lessonsix.App</mainClass>
+                <mainClass>ru.boiko.se.lessonseven.App</mainClass>
               </manifest>
             </archive>
           </configuration>
