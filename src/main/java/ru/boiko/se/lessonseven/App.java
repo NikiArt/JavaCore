@@ -8,8 +8,11 @@ package ru.boiko.se.lessonseven;
  * для сервера необходимо в main передать аругмент String[] = "server"
  */
 
-import ru.boiko.se.lessonsix.client.Client;
-import ru.boiko.se.lessonsix.server.Server;
+import ru.boiko.se.lessonseven.client.Client;
+import ru.boiko.se.lessonseven.server.Server;
+
+import javax.enterprise.inject.se.SeContainerInitializer;
+import javax.enterprise.inject.spi.CDI;
 
 public class App {
     public static void main(String[] args) {
@@ -17,17 +20,20 @@ public class App {
     }
 
     private static void getApp(final String[] args){
-        if(args == null || args.length == 0) {
-            try {
+        SeContainerInitializer.newInstance().addPackages(App.class).initialize();
+       if(args == null || args.length == 0) {
+           CDI.current().select(Client.class).get().run();
+            /*try {
                 final Client clientRun = new Client();
                 clientRun.run();
             } catch(Exception e) {
                 System.out.println("Не удалось установить соединение с сервером");
-            }
+            }*/
         }
         if(args.length == 1 && "server".equals(args[0])) {
-            final Server serverRun = new Server();
-            serverRun.run();
+            CDI.current().select(Server.class).get().run();
+            /*final Server serverRun = new Server();
+            serverRun.run();*/
         }
     }
 }

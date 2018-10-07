@@ -1,4 +1,4 @@
-package ru.boiko.se.lessonseven.model;
+package ru.boiko.se.lessonseven.server.model;
 
 public enum PacketType {
 

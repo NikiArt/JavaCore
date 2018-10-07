@@ -9,6 +9,6 @@ import javax.enterprise.context.ApplicationScoped;
 @Setter
 @ApplicationScoped
 public class Config {
-    private Integer socket = 8179;
+    private Integer port = 8179;
     private String host = "localhost";
 }

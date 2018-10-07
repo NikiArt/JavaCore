@@ -1,4 +1,4 @@
-package ru.boiko.se.lessonseven.model;
+package ru.boiko.se.lessonseven.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.internal.Nullable;
@@ -10,17 +10,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class User{
+public final class PacketResult extends Packet {
+    {
+        setType(PacketType.RESULT);
+    }
 
-    @Nullable
-    private String login;
+    public PacketResult(Boolean success) { this.success = success; }
 
-    @Nullable
-    private String password;
-
-    @Nullable
-    private String email;
-
-    @Nullable
-    private String nick;
+    private Boolean success = true;
 }

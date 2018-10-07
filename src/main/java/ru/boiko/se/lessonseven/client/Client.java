@@ -8,28 +8,52 @@ package ru.boiko.se.lessonseven.client;
  */
 
 import lombok.SneakyThrows;
-import ru.boiko.se.lessonsix.Config;
+import ru.boiko.se.lessonseven.Config;
+import ru.boiko.se.lessonseven.client.Events.ClientMessageInputEvent;
+import ru.boiko.se.lessonseven.client.Events.ClientMessageReadEvent;
+
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Client {
-    private Socket socket;
-    private final ExecutorService executor;
 
-    @SneakyThrows
-    public Client() {
-        final Config config = new Config();
-        final String host = config.getHost();
-        final int port = config.getSocket();
-        socket = null;
-        executor = Executors.newCachedThreadPool();
-        socket = new Socket(host, port);
-    }
+    @Inject
+    private Event<ClientMessageReadEvent> clientMessageReadEvent;
+
+    @Inject
+    private Event<ClientMessageInputEvent> clientMessageInputEvent;
+
+    @Inject
+    private Config config;
+
+    private Socket socket;
+
+    private DataInputStream in;
+
+    private DataOutputStream out;
 
     @SneakyThrows
     public final void run() {
-        executor.submit(new MessageSender(socket));
-        executor.submit(new SteamWriter(socket));
+        final  String host = config.getHost();
+        final Integer port = config.getPort();
+        socket = new Socket(host, port);
+        in = new DataInputStream(socket.getInputStream());
+        out = new DataOutputStream(socket.getOutputStream());
+        clientMessageReadEvent.fireAsync(new ClientMessageReadEvent());
+        clientMessageInputEvent.fire(new ClientMessageInputEvent());
+
+    }
+
+    @SneakyThrows
+    public void send(String message) { out.writeUTF(message); }
+
+    @SneakyThrows
+    public void exit() {
+        socket.close();
+        System.out.println("Chat client disconnected...");
+        System.exit(0);
     }
 }

@@ -1,5 +1,4 @@
-package ru.boiko.se.lessonseven.model;
-
+package ru.boiko.se.lessonseven.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sun.istack.internal.Nullable;
@@ -11,12 +10,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class PacketBroadcast extends Packet{
-
-    {
-        setType(PacketType.BROADCAST);
-    }
+public final class User{
 
     @Nullable
-    private String message = "";
+    private String login;
+
+    @Nullable
+    private String password;
+
+    @Nullable
+    private String email;
+
+    @Nullable
+    private String nick;
 }

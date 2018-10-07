@@ -11,6 +11,7 @@ package ru.boiko.se.lessonseven.server;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import ru.boiko.se.lessonseven.Config;
+import ru.boiko.se.lessonseven.server.events.ServerConnectionEvent;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
@@ -29,19 +30,10 @@ public class Server {
 
     private ServerSocket serverSocket;
 
-    @SneakyThrows
-    public Server() {
-        /*executor = Executors.newCachedThreadPool();
-        this.config = new Config();
-        serverRun = new SteamRunner(this);
-        serverSocket = new ServerSocket(config.getSocket());
-        System.out.println("Сервер запущен, ожидаем подключения...");*/
-        serverSocket = new ServerSocket(config.getSocket());
-    }
 
     @SneakyThrows
     public final void run() {
-        //executor.submit(serverRun);
+        serverSocket = new ServerSocket(config.getPort());
         serverConnectionEvent.fire(new ServerConnectionEvent());
     }
 }

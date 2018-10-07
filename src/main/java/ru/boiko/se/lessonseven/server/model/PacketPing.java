@@ -1,6 +1,7 @@
-package ru.boiko.se.lessonseven.model;
+package ru.boiko.se.lessonseven.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.internal.Nullable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,11 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public final class PacketMessage extends Packet{
+public final class PacketPing extends Packet{
     {
-        setType(PacketType.MESSAGE);
+        setType(PacketType.PING);
     }
-
-    private String login;
-    private String message;
 }
