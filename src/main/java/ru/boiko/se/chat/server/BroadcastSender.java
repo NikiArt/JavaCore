@@ -3,22 +3,19 @@ package ru.boiko.se.chat.server;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import ru.boiko.se.chat.packets.Packet;
+import ru.boiko.se.chat.packets.PacketType;
 
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.List;
 import java.util.Scanner;
 
 public class BroadcastSender implements Runnable {
-    private final List<PrintWriter> printWriterList;
     private final Scanner scanner;
-    private final Socket Socket;
     private final Users users = Users.getInstance();
+    private final ActiveUsers activeUsers = ActiveUsers.getInstance();
+    private final Connection currentConnection;
 
-    public BroadcastSender(final List<PrintWriter> printWriterList, final Scanner scanner, Socket Socket) {
-        this.printWriterList = printWriterList;
+    public BroadcastSender(Scanner scanner, Connection currentConnection){
         this.scanner = scanner;
-        this.Socket = Socket;
+        this.currentConnection = currentConnection;
     }
 
     @Override
@@ -36,44 +33,53 @@ public class BroadcastSender implements Runnable {
                     regisrtyCliaent(packet);
             }
             if ("end".equals(message)) {
-                message = "Клиент отключился";
+                //message = "Клиент отключился";
                 scanner.close();
-                sendMessage(message);
                 return;
             }
-            sendMessage(message);
+            currentConnection.send(message);
             run();
     }
 
+    @SneakyThrows
     private void regisrtyCliaent(Packet packet) {
             if(users.regisrty(packet.getLogin(), packet.getPassword())) {
-
+                final  Packet requestPacket = new Packet();
+                requestPacket.setId(packet.getId());
+                requestPacket.setType(PacketType.REGISTRY);
+                requestPacket.setMessage("Success");
+                currentConnection.send(new ObjectMapper().writeValueAsString(requestPacket));
             };
     }
 
+    @SneakyThrows
     private void loginClient(Packet packet) {
         User registredMember = users.findByLogin(packet.getLogin());
+        final  Packet requestPacket = new Packet();
+        requestPacket.setId(packet.getId());
+        requestPacket.setType(PacketType.LOGIN);
+        if (registredMember == null) {
+            requestPacket.setMessage("Error. User not found");
+        } else {
+            /*if (activeUsers.getActiveUsers().contains(registredMember)) {
+                requestPacket.setMessage("Error. The user is already connected");
+            } else {*/
+                requestPacket.setMessage("Success. " + registredMember.getLogin());
+                currentConnection.setUser(registredMember);
+            //}
+        }
+        currentConnection.send(new ObjectMapper().writeValueAsString(requestPacket));
     }
 
+    @SneakyThrows
     private void broadcastMessage(Packet packet) {
-
-    }
-
-    private void sendBroadcastMessage(final String message) {
-        for(int i = 0; i < printWriterList.size(); i++) {
-            final PrintWriter currentPw = printWriterList.get(i);
-            currentPw.println(message);
-            currentPw.flush();
+        final  Packet requestPacket = new Packet();
+        requestPacket.setId(packet.getId());
+        requestPacket.setType(PacketType.MESSAGE);
+        requestPacket.setMessage(packet.getMessage());
+        for (Connection connection: ActiveUsers.getInstance().getActiveUsers()) {
+            connection.send(new ObjectMapper().writeValueAsString(requestPacket));
         }
-        System.out.println(message);
     }
 
-    private void sendMessage(final String message) {
-        for(int i = 0; i < printWriterList.size(); i++) {
-            final PrintWriter currentPw = printWriterList.get(i);
-            currentPw.println(message);
-            currentPw.flush();
-        }
-        System.out.println(message);
-    }
 }

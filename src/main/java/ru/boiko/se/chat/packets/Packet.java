@@ -2,8 +2,6 @@ package ru.boiko.se.chat.packets;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.enterprise.context.ApplicationScoped;
 import java.util.UUID;
 
 @Getter

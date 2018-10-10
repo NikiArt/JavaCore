@@ -2,18 +2,15 @@ package ru.boiko.se.chat.server;
 
 import lombok.SneakyThrows;
 
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class StreamRunner implements Runnable {
     private final Server server;
-    private final List<PrintWriter> printWriterList = new ArrayList<>();
     private final ExecutorService executor;
+    private final ActiveUsers activeUsers = ActiveUsers.getInstance();
 
     @SneakyThrows
     public StreamRunner(final Server server) {
@@ -27,9 +24,9 @@ public class StreamRunner implements Runnable {
         final Socket socket = this.server.getServerSocket().accept();
         System.out.println("Клиент подключился");
         final Scanner scanner = new Scanner(socket.getInputStream());
-        final PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
-        printWriterList.add(printWriter);
-        executor.submit(new BroadcastSender(printWriterList, scanner, socket));
+        Connection currentConnection = new Connection(socket);
+        activeUsers.getActiveUsers().add(currentConnection);
+        executor.submit(new BroadcastSender(scanner, currentConnection));
         this.server.run();
     }
 }

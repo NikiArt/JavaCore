@@ -10,6 +10,7 @@ package ru.boiko.se.chat;
 
 import ru.boiko.se.chat.client.Client;
 import ru.boiko.se.chat.server.Server;
+import ru.boiko.se.chat.ui.MyWindow;
 
 public class App {
     public static void main(String[] args) {
@@ -21,6 +22,9 @@ public class App {
             try {
                 final Client clientRun = new Client();
                 clientRun.run();
+                final MyWindow chatWindow = new MyWindow();
+                chatWindow.setLocationRelativeTo(null);
+                chatWindow.setVisible(true);
             } catch(Exception e) {
                 System.out.println("Не удалось установить соединение с сервером");
             }

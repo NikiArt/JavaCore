@@ -8,6 +8,7 @@ package ru.boiko.se.chat.client;
  */
 
 import lombok.SneakyThrows;
+import ru.boiko.se.chat.ui.MyWindow;
 import ru.boiko.se.lessonsix.Config;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -25,6 +26,9 @@ public class Client {
         socket = null;
         executor = Executors.newCachedThreadPool();
         socket = new Socket(host, port);
+        final MyWindow chatWindow = new MyWindow();
+        chatWindow.setLocationRelativeTo(null);
+        chatWindow.setVisible(true);
     }
 
     @SneakyThrows
