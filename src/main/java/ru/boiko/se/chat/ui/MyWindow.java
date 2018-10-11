@@ -5,6 +5,8 @@ import ru.boiko.se.chat.packets.PacketType;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Класс создания окна чата
@@ -49,9 +51,9 @@ public class MyWindow extends JFrame {
         final JButton registration = new JButton("Зарегистрироваться");
         registration.addActionListener(event -> changeFrame(PacketType.REGISTRY));
         loginPanel.add(loginInput);
-        loginPanel.add(passwordInput);
+        /*loginPanel.add(passwordInput);
         loginPanel.add(loginChat);
-        loginPanel.add(registration);
+        loginPanel.add(registration);*/
 
         registrationPanel = new JPanel();
         registrationPanel.setLayout(new BoxLayout(registrationPanel,BoxLayout.Y_AXIS));
@@ -85,16 +87,19 @@ public class MyWindow extends JFrame {
 
         mainPanel.add(loginPanel,"1");
         //mainPanel.add(registrationPanel,"2");
-       // mainPanel.add(chatPanel,"3");
+        //mainPanel.add(chatPanel,"3");
 
         add(mainPanel);
+        //card.show(mainPanel,"1");
 
         changeFrame(PacketType.LOGIN);
 
     }
 
     private void changeFrame(PacketType packetType) {
-        switch (packetType) {
+        int xxx = (int)(Math.random()*3);
+        card.show(mainPanel,""+xxx);
+        /*switch (packetType) {
             case REGISTRY:
                 card.show(mainPanel,"2");
                 loginInput.setText("");
@@ -104,13 +109,13 @@ public class MyWindow extends JFrame {
                 loginInput.setText("");
                 passwordInput.setText("");
             case MESSAGE:
-                /*chatPanel.setVisible(true);
+                *//*chatPanel.setVisible(true);
                 registrationPanel.setVisible(false);
-                loginPanel.setVisible(false);*/
+                loginPanel.setVisible(false);*//*
                 card.show(mainPanel,"3");
                 loginInput.setText("");
                 passwordInput.setText("");
-        }
+        }*/
     }
 
     private void send(PacketType packetType){

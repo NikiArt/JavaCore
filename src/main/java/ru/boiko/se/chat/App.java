@@ -22,9 +22,6 @@ public class App {
             try {
                 final Client clientRun = new Client();
                 clientRun.run();
-                final MyWindow chatWindow = new MyWindow();
-                chatWindow.setLocationRelativeTo(null);
-                chatWindow.setVisible(true);
             } catch(Exception e) {
                 System.out.println("Не удалось установить соединение с сервером");
             }

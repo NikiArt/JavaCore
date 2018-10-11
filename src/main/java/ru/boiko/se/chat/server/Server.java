@@ -13,7 +13,6 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import ru.boiko.se.lessonsix.Config;
 
-import javax.inject.Inject;
 import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

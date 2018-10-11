@@ -5,11 +5,11 @@ import lombok.SneakyThrows;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class SteamWriter implements Runnable {
+public class StreamWriter implements Runnable {
     private final Scanner broadcastMessage;
 
     @SneakyThrows
-    public SteamWriter(final Socket socket){
+    public StreamWriter(final Socket socket){
         broadcastMessage = new Scanner(socket.getInputStream());
     }
 
