@@ -21,24 +21,22 @@ public class BroadcastSender implements Runnable {
     @Override
     @SneakyThrows
     public void run() {
-            String message = scanner.nextLine();
-            final ObjectMapper objectMapper = new ObjectMapper();
-            final Packet packet = objectMapper.readValue(message, Packet.class);
-            switch (packet.getType()) {
-                case MESSAGE:
-                    broadcastMessage(packet);
-                case LOGIN:
-                    loginClient(packet);
-                case REGISTRY:
-                    regisrtyCliaent(packet);
-            }
-            if ("end".equals(message)) {
-                //message = "Клиент отключился";
-                scanner.close();
-                return;
-            }
-            currentConnection.send(message);
-            run();
+        String message = scanner.nextLine();
+        System.out.println(message);
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final Packet packet = objectMapper.readValue(message, Packet.class);
+        switch (packet.getType()) {
+            case MESSAGE:
+                broadcastMessage(packet);
+                break;
+            case LOGIN:
+                loginClient(packet);
+                break;
+            case REGISTRY:
+                regisrtyCliaent(packet);
+                break;
+        }
+        run();
     }
 
     @SneakyThrows

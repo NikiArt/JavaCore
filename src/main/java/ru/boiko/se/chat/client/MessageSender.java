@@ -28,7 +28,7 @@ public class MessageSender implements Runnable {
     @SneakyThrows
     public void run() {
         if (inMessage.hasNext()) {
-            System.out.println("message");
+           // System.out.println("message");
             String message = inMessage.nextLine();
             /*@NotNull final ObjectMapper objectMapper = new ObjectMapper();
             @NotNull final Packet packet = new Packet();
