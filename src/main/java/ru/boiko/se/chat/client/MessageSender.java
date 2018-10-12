@@ -51,8 +51,8 @@ public class MessageSender implements Runnable {
 
     @SneakyThrows
     private void sendMsg(final String message) {
-        outMessage.println(message);
-        outMessage.flush();
-        //stream.writeUTF(message);
+        /*outMessage.println(message);
+        outMessage.flush();*/
+        stream.writeUTF(message);
     }
 }

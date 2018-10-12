@@ -5,23 +5,29 @@ import lombok.SneakyThrows;
 import ru.boiko.se.chat.packets.Packet;
 import ru.boiko.se.chat.packets.PacketType;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
 import java.util.Scanner;
 
 public class BroadcastSender implements Runnable {
-    private final Scanner scanner;
+    private final DataInputStream scanner;
     private final Users users = Users.getInstance();
     private final ActiveUsers activeUsers = ActiveUsers.getInstance();
     private final Connection currentConnection;
+    private final Socket socket;
 
-    public BroadcastSender(Scanner scanner, Connection currentConnection){
+    public BroadcastSender(DataInputStream scanner, Socket socket, Connection currentConnection){
         this.scanner = scanner;
         this.currentConnection = currentConnection;
+        this.socket = socket;
     }
 
     @Override
     @SneakyThrows
     public void run() {
-        String message = scanner.nextLine();
+        //String message = scanner.nextLine();
+        String message = scanner.readUTF();
         System.out.println(message);
         final ObjectMapper objectMapper = new ObjectMapper();
         final Packet packet = objectMapper.readValue(message, Packet.class);
@@ -52,21 +58,24 @@ public class BroadcastSender implements Runnable {
 
     @SneakyThrows
     private void loginClient(Packet packet) {
-        User registredMember = users.findByLogin(packet.getLogin());
-        final  Packet requestPacket = new Packet();
-        requestPacket.setId(packet.getId());
-        requestPacket.setType(PacketType.LOGIN);
-        if (registredMember == null) {
-            requestPacket.setMessage("Error. User not found");
-        } else {
+            User registredMember = users.findByLogin(packet.getLogin());
+            DataOutputStream stream = new DataOutputStream(socket.getOutputStream());
+            final Packet requestPacket = new Packet();
+            requestPacket.setId(packet.getId());
+            requestPacket.setType(PacketType.LOGIN);
+            if (registredMember == null) {
+                requestPacket.setMessage("Error. User not found");
+            } else {
             /*if (activeUsers.getActiveUsers().contains(registredMember)) {
                 requestPacket.setMessage("Error. The user is already connected");
             } else {*/
                 requestPacket.setMessage("Success. " + registredMember.getLogin());
                 currentConnection.setUser(registredMember);
-            //}
-        }
-        currentConnection.send(new ObjectMapper().writeValueAsString(requestPacket));
+                //}
+            }
+            stream.writeUTF(new ObjectMapper().writeValueAsString(registredMember));
+            stream.flush();
+        //currentConnection.send(new ObjectMapper().writeValueAsString(requestPacket));
     }
 
     @SneakyThrows

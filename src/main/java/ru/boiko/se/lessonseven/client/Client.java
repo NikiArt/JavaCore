@@ -12,12 +12,14 @@ import ru.boiko.se.lessonseven.Config;
 import ru.boiko.se.lessonseven.client.Events.ClientMessageInputEvent;
 import ru.boiko.se.lessonseven.client.Events.ClientMessageReadEvent;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 
+@ApplicationScoped
 public class Client {
 
     @Inject

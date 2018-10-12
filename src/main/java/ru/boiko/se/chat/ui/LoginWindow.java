@@ -100,22 +100,23 @@ public class LoginWindow extends JFrame{
         packet.setLogin(loginInput.getText());
         packet.setPassword(passwordInput.getText());
         packet.setMessage("Logging in user ...");
-        /*stream.writeUTF(objectMapper.writeValueAsString(packet));
-        stream.flush();*/
-        outMessage.println(objectMapper.writeValueAsString(packet));
-        outMessage.flush();
-        final Scanner scanner = new Scanner(socket.getInputStream());
-        in = new DataInputStream(socket.getInputStream());
-        while (true) {
-            /*String str = in.readUTF();
-            textLabel.setText(str);*/
-            if (scanner.hasNext()) {
+        stream.writeUTF(objectMapper.writeValueAsString(packet));
+        stream.flush();
+        //stream.flush();
+        /*outMessage.println(objectMapper.writeValueAsString(packet));
+        outMessage.flush();*/
+        /*final DataInputStream scanner = new DataInputStream(socket.getInputStream());
+        in = new DataInputStream(socket.getInputStream());*/
+        /*while (true) {
+            *//*String str = in.readUTF();
+            textLabel.setText(str);*//*
+            if (scanner.) {
                 String mess = scanner.nextLine();
                 System.out.println(mess);
                 textLabel.setText(mess);
                 break;
             }
-        }
+        }*/
     }
 }
 

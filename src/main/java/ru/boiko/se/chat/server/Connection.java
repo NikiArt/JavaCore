@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.UUID;
 
@@ -25,9 +26,16 @@ public class Connection {
 
     public Connection(@NotNull final Socket socket) { this.socket = socket; }
 
-    @SneakyThrows
+    //@SneakyThrows
     public void send (final String message) {
-        final DataOutputStream stream = new DataOutputStream(socket.getOutputStream());
-        stream.writeUTF(message);
+        final DataOutputStream stream;
+        try {
+            stream = new DataOutputStream(socket.getOutputStream());
+            stream.writeUTF(message);
+            stream.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -2,6 +2,7 @@ package ru.boiko.se.chat.server;
 
 import lombok.SneakyThrows;
 
+import java.io.DataInputStream;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
@@ -23,10 +24,11 @@ public class StreamRunner implements Runnable {
     public void run() {
         final Socket socket = this.server.getServerSocket().accept();
         System.out.println("Клиент подключился");
-        final Scanner scanner = new Scanner(socket.getInputStream());
+       // final Scanner scanner = new Scanner(socket.getInputStream());
+        final DataInputStream scanner = new DataInputStream(socket.getInputStream());
         Connection currentConnection = new Connection(socket);
         activeUsers.getActiveUsers().add(currentConnection);
-        executor.submit(new BroadcastSender(scanner, currentConnection));
+        executor.submit(new BroadcastSender(scanner, socket, currentConnection));
         this.server.run();
     }
 }

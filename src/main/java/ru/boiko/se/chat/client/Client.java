@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 public class Client {
     private Socket socket;
     private final ExecutorService executor;
+    final LoginWindow loginWindow;
 
     @SneakyThrows
     public Client() {
@@ -27,7 +28,7 @@ public class Client {
         socket = null;
         executor = Executors.newCachedThreadPool();
         socket = new Socket(host, port);
-        final LoginWindow loginWindow= new LoginWindow(socket);
+        loginWindow = new LoginWindow(socket);
         loginWindow.setLocationRelativeTo(null);
         loginWindow.setVisible(true);
     }
@@ -36,5 +37,6 @@ public class Client {
     public final void run() {
         executor.submit(new MessageSender(socket));
         executor.submit(new StreamWriter(socket));
+        executor.submit(new BroadcastListener(socket, loginWindow));
     }
 }
