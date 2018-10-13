@@ -1,4 +1,4 @@
-package ru.boiko.se.chatNew.users;
+package ru.boiko.se.chat.users;
 
 import lombok.Getter;
 import lombok.Setter;

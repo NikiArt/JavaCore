@@ -1,4 +1,4 @@
-package ru.boiko.se.chatNew.client;
+package ru.boiko.se.chat.client;
 
 import lombok.SneakyThrows;
 

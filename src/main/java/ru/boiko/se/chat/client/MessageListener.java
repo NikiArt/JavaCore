@@ -1,21 +1,17 @@
-package ru.boiko.se.chatNew.client;
+package ru.boiko.se.chat.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import ru.boiko.se.chatNew.client.gui.ChatWindow;
-import ru.boiko.se.chatNew.client.gui.WorkWindows;
-import ru.boiko.se.chatNew.packet.Packet;
-import ru.boiko.se.chatNew.packet.PacketType;
-import ru.boiko.se.chatNew.users.ActiveUsers;
+import ru.boiko.se.chat.client.gui.ChatWindow;
+import ru.boiko.se.chat.client.gui.WorkWindows;
+import ru.boiko.se.chat.packet.Packet;
+import ru.boiko.se.chat.packet.PacketType;
 
 import javax.swing.*;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 public class MessageListener implements Runnable{
     private DataInputStream incomingMessage;
@@ -60,11 +56,6 @@ public class MessageListener implements Runnable{
         } catch (Exception e){
             e.printStackTrace();
         }
-       /* ActiveUsers activeUsers = objectMapper.readValue(packet.getMessage(), ActiveUsers.class);
-        for (HashMap.Entry<String, DataOutputStream> entry : ActiveUsers.getInstance().getActiveUsers().entrySet()) {
-            listModel.addElement(entry.getKey());
-            System.out.println(entry.getKey());
-        }*/
     }
 
     private void regisrty(Packet packet) {

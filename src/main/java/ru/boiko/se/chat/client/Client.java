@@ -1,11 +1,11 @@
-package ru.boiko.se.chatNew.client;
+package ru.boiko.se.chat.client;
 
 import lombok.SneakyThrows;
-import ru.boiko.se.chatNew.Config;
-import ru.boiko.se.chatNew.client.gui.ChatWindow;
-import ru.boiko.se.chatNew.client.gui.LoginWindow;
-import ru.boiko.se.chatNew.client.gui.RegistryWindow;
-import ru.boiko.se.chatNew.client.gui.WorkWindows;
+import ru.boiko.se.chat.Config;
+import ru.boiko.se.chat.client.gui.ChatWindow;
+import ru.boiko.se.chat.client.gui.LoginWindow;
+import ru.boiko.se.chat.client.gui.RegistryWindow;
+import ru.boiko.se.chat.client.gui.WorkWindows;
 
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;

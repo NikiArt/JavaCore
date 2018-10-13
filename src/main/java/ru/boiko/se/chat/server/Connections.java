@@ -1,7 +1,7 @@
-package ru.boiko.se.chatNew.server;
+package ru.boiko.se.chat.server;
 
 import lombok.SneakyThrows;
-import ru.boiko.se.chatNew.Config;
+import ru.boiko.se.chat.Config;
 
 import java.net.ServerSocket;
 import java.net.Socket;

@@ -1,4 +1,4 @@
-package ru.boiko.se.chatNew.client.gui;
+package ru.boiko.se.chat.client.gui;
 
 import lombok.Getter;
 import lombok.Setter;

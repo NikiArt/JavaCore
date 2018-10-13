@@ -1,4 +1,4 @@
-package ru.boiko.se.chatNew.packet;
+package ru.boiko.se.chat.packet;
 
 public enum PacketType {
 

@@ -1,7 +1,7 @@
-package ru.boiko.se.chatNew;
+package ru.boiko.se.chat;
 
-import ru.boiko.se.chatNew.client.Client;
-import ru.boiko.se.chatNew.server.Server;
+import ru.boiko.se.chat.client.Client;
+import ru.boiko.se.chat.server.Server;
 
 public class App {
     public static void main(String[] args) {

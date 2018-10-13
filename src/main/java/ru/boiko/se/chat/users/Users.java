@@ -1,8 +1,8 @@
-package ru.boiko.se.chatNew.users;
+package ru.boiko.se.chat.users;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
-import ru.boiko.se.chatNew.packet.Packet;
+import ru.boiko.se.chat.packet.Packet;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

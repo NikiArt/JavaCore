@@ -1,10 +1,10 @@
-package ru.boiko.se.chatNew.client.gui;
+package ru.boiko.se.chat.client.gui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import ru.boiko.se.chatNew.client.MessageSender;
-import ru.boiko.se.chatNew.packet.Packet;
-import ru.boiko.se.chatNew.packet.PacketType;
+import ru.boiko.se.chat.client.MessageSender;
+import ru.boiko.se.chat.packet.Packet;
+import ru.boiko.se.chat.packet.PacketType;
 
 import javax.swing.*;
 

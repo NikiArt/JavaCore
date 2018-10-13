@@ -1,11 +1,11 @@
-package ru.boiko.se.chatNew.server;
+package ru.boiko.se.chat.server;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import ru.boiko.se.chatNew.packet.Packet;
-import ru.boiko.se.chatNew.packet.PacketType;
-import ru.boiko.se.chatNew.users.ActiveUsers;
-import ru.boiko.se.chatNew.users.Users;
+import ru.boiko.se.chat.packet.Packet;
+import ru.boiko.se.chat.packet.PacketType;
+import ru.boiko.se.chat.users.ActiveUsers;
+import ru.boiko.se.chat.users.Users;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

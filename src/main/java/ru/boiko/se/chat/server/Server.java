@@ -1,8 +1,8 @@
-package ru.boiko.se.chatNew.server;
+package ru.boiko.se.chat.server;
 
 import lombok.SneakyThrows;
-import ru.boiko.se.chatNew.packet.Packet;
-import ru.boiko.se.chatNew.users.Users;
+import ru.boiko.se.chat.packet.Packet;
+import ru.boiko.se.chat.users.Users;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
