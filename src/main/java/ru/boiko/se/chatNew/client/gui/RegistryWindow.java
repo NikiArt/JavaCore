@@ -27,6 +27,7 @@ public class RegistryWindow extends JFrame {
     private ObjectMapper objectMapper;
     
     public RegistryWindow(MessageSender messageSender) {
+        objectMapper = new ObjectMapper();
         this.messageSender = messageSender;
         JPanel mainPanel = new JPanel();
         loginInput = new JTextField();
@@ -178,13 +179,13 @@ public class RegistryWindow extends JFrame {
             packet.setEmail(emailInput.getText());
             messageSender.send(objectMapper.writeValueAsString(packet));
         }
-        WorkWindows.getInstance().getRegistryWindow().setVisible(false);
+        /*WorkWindows.getInstance().getRegistryWindow().setVisible(false);
         loginInput.setText("");
         passwordInput.setText("");
         passwordRepeatInput.setText("");
         nickInput.setText("");
         emailInput.setText("");
-        WorkWindows.getInstance().getLoginWindow().setVisible(true);
+        WorkWindows.getInstance().getLoginWindow().setVisible(true);*/
 
     }
 }

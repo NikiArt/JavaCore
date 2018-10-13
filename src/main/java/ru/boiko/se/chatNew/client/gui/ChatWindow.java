@@ -1,21 +1,35 @@
 package ru.boiko.se.chatNew.client.gui;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
 import ru.boiko.se.chatNew.client.MessageSender;
+import ru.boiko.se.chatNew.packet.Packet;
+import ru.boiko.se.chatNew.packet.PacketType;
 
 import javax.swing.*;
 
+@Getter
+@Setter
 public class ChatWindow extends JFrame {
 
     private JButton sendButton;
-    private JList<String> userList;
+    private JList userList;
     private JScrollPane userScroll;
     private JScrollPane chatScroll;
     private JTextArea chatArea;
     private JTextField inputText;
+    private  DefaultListModel listModel;
+    private MessageSender messageSender;
+    private ObjectMapper objectMapper;
     
     public ChatWindow(MessageSender messageSender) {
+        this.messageSender = messageSender;
+        objectMapper = new ObjectMapper();
         userScroll = new JScrollPane();
-        userList = new JList<>();
+        listModel = new DefaultListModel();
+        userList = new JList(listModel);
         inputText = new JTextField();
         chatScroll = new JScrollPane();
         chatArea = new JTextArea();
@@ -30,6 +44,9 @@ public class ChatWindow extends JFrame {
         chatScroll.setViewportView(chatArea);
 
         sendButton.setText("Отправить");
+        sendButton.addActionListener(event -> send());
+        inputText.addActionListener(event -> send());
+        userList.setLayoutOrientation(JList.VERTICAL);
 
         GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -59,5 +76,15 @@ public class ChatWindow extends JFrame {
         pack();
         setLocationRelativeTo(null);
     }
+
+    @SneakyThrows
+    private void send() {
+        Packet packet = new Packet();
+        packet.setType(PacketType.MESSAGE);
+        packet.setMessage(inputText.getText());
+        messageSender.send(objectMapper.writeValueAsString(packet));
+        inputText.setText("");
+    }
+
 }
 

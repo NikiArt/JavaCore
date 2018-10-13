@@ -1,6 +1,7 @@
 package ru.boiko.se.chatNew.server;
 
 import lombok.SneakyThrows;
+import ru.boiko.se.chatNew.packet.Packet;
 import ru.boiko.se.chatNew.users.Users;
 
 import java.util.concurrent.ExecutorService;
@@ -19,8 +20,16 @@ public class Server {
     }
 
     private void defaultUsers() {
-        Users.getInstance().regisrty("admin", "admin");
-        Users.getInstance().regisrty("test", "test");
+        Packet packetAdmin = new Packet();
+        Packet packetTest = new Packet();
+        packetAdmin.setLogin("admin");
+        packetAdmin.setPassword("admin");
+        packetAdmin.setNick("admin");
+        packetTest.setLogin("test");
+        packetTest.setPassword("test");
+        packetTest.setNick("test");
+        Users.getInstance().regisrty(packetAdmin);
+        Users.getInstance().regisrty(packetTest);
     }
 
     @SneakyThrows

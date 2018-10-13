@@ -53,21 +53,4 @@ public class Users {
         if (login == null || login.isEmpty()) return false;
         return users.containsKey(login);
     }
-
-    public boolean setNick(String login, String nick) {
-        if (login == null || login.isEmpty()) return false;
-        if (nick == null || nick.isEmpty()) return false;
-        @Nullable final User user = findByLogin(login);
-        if (user == null) return false;
-        user.setNick(nick);
-        return true;
-    }
-
-    public boolean setPassword(String login, String passwordOld, String passwordNew) {
-        if(!check(login, passwordOld)) return false;
-        if(passwordNew == null || passwordNew.isEmpty()) return false;
-        @Nullable final User user = findByLogin(login);
-        user.setPassword(passwordNew);
-        return true;
-    }
 }
