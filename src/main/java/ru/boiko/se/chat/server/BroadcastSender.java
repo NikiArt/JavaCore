@@ -73,7 +73,7 @@ public class BroadcastSender implements Runnable {
                 currentConnection.setUser(registredMember);
                 //}
             }
-            stream.writeUTF(new ObjectMapper().writeValueAsString(registredMember));
+            stream.writeUTF(new ObjectMapper().writeValueAsString(requestPacket));
             stream.flush();
         //currentConnection.send(new ObjectMapper().writeValueAsString(requestPacket));
     }
