@@ -9,6 +9,7 @@ public class WorkWindows {
     private static WorkWindows instance;
     private LoginWindow loginWindow;
     private ChatWindow chatWindow;
+    private RegistryWindow registryWindow;
 
 
 

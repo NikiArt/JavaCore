@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import ru.boiko.se.chatNew.Config;
 import ru.boiko.se.chatNew.client.gui.ChatWindow;
 import ru.boiko.se.chatNew.client.gui.LoginWindow;
+import ru.boiko.se.chatNew.client.gui.RegistryWindow;
 import ru.boiko.se.chatNew.client.gui.WorkWindows;
 
 import java.net.Socket;
@@ -17,6 +18,7 @@ public class Client {
 
     private LoginWindow loginWindow;
     private ChatWindow chatWindow;
+    private RegistryWindow registryWindow;
 
     @SneakyThrows
     public Client() {
@@ -31,7 +33,10 @@ public class Client {
         loginWindow = new LoginWindow(messageSender);
         WorkWindows.getInstance().setLoginWindow(loginWindow);
         chatWindow = new ChatWindow(messageSender);
+
         WorkWindows.getInstance().setChatWindow(chatWindow);
+        registryWindow = new RegistryWindow(messageSender);
+        WorkWindows.getInstance().setRegistryWindow(registryWindow);
     }
 
     @SneakyThrows

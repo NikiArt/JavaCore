@@ -34,6 +34,8 @@ public class BroadcastSender implements Runnable{
                 switch (packet.getType()) {
                     case LOGIN:
                         login(packet);
+                    case REGISTRY:
+                        registry(packet);
                 }
             } catch (Exception e) {
                 send(currentMessage);
@@ -41,6 +43,13 @@ public class BroadcastSender implements Runnable{
 
         }
         run();
+    }
+
+    private void registry(Packet packet) {
+        Packet requestPacket = new Packet();
+        if(Users.getInstance().findByLogin(packet.getLogin()) == null) {
+            Users.getInstance().regisrty(packet)
+        }
     }
 
     @SneakyThrows

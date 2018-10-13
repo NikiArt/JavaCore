@@ -2,6 +2,7 @@ package ru.boiko.se.chatNew.users;
 
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
+import ru.boiko.se.chatNew.packet.Packet;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -36,15 +37,14 @@ public class Users {
         return password.equals(user.getPassword());
     }
 
-    public boolean regisrty(String login, String password) {
-        if (login == null || login.isEmpty()) return false;
-        if (password == null || password.isEmpty()) return false;
-        if(exists(login)) return  false;
+    public boolean regisrty(Packet packet) {
         @NotNull final User user = new User();
-        user.setLogin(login);
-        user.setPassword(password);
-        users.put(login, user);
-        System.out.println("Added new user with login " + login);
+        user.setLogin(packet.getLogin());
+        user.setPassword(packet.getPassword());
+        user.setNick(packet.getNick());
+        user.setEmail(packet.getEmail());
+        users.put(packet.getLogin(), user);
+        System.out.println("Added new user with login " + packet.getLogin());
         return true;
 
     }

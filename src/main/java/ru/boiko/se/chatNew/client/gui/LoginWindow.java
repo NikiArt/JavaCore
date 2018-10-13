@@ -19,7 +19,7 @@ public class LoginWindow extends JFrame{
     private JButton registryButton;
     private JPanel mainPanel;
     private JTextField loginInput;
-    private JTextField passwordInput;
+    private JPasswordField passwordInput;
     private ObjectMapper objectMapper;
     private JLabel textLabel;
     private MessageSender messageSender;
@@ -33,17 +33,18 @@ public class LoginWindow extends JFrame{
         loginInput.addActionListener(event -> passwordInput.requestFocus());
         textLabel = new JLabel();
         textLabel.setText("Вход в чат.");
-        passwordInput = new JTextField();
+        passwordInput = new JPasswordField();
         passwordInput.addActionListener(event -> send());
         loginButton = new JButton();
         loginButton.addActionListener(event -> send());
         registryButton = new JButton();
-
+        registryButton.addActionListener(event -> openRegistryWindow());
+        setTitle("Сетевой чат");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        loginButton.setText("Login");
+        loginButton.setText("Вход");
 
-        registryButton.setText("Registry");
+        registryButton.setText("Регистрация");
 
         GroupLayout mainPanelLayout = new GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -92,13 +93,20 @@ public class LoginWindow extends JFrame{
         setLocationRelativeTo(null);
     }
 
+    private void openRegistryWindow() {
+        WorkWindows.getInstance().getLoginWindow().setVisible(false);
+        loginInput.setText("");
+        passwordInput.setText("");
+        WorkWindows.getInstance().getRegistryWindow().setVisible(true);
+    }
+
     @SneakyThrows
     private void send() {
 
         @NotNull final Packet packet = new Packet();
         packet.setType(PacketType.LOGIN);
         packet.setLogin(loginInput.getText());
-        packet.setPassword(passwordInput.getText());
+        packet.setPassword(new String(passwordInput.getPassword()));
         packet.setMessage("Logging in user ...");
         messageSender.send(objectMapper.writeValueAsString(packet));
     }

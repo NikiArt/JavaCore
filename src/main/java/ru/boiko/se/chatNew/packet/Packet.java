@@ -14,4 +14,6 @@ public class Packet {
     private String password = "";
     private PacketType type = PacketType.NONE;
     private Boolean success = false;
+    private String nick = "";
+    private String email = "";
 }
