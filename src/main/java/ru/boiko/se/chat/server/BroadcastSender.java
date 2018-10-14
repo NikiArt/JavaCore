@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import ru.boiko.se.chat.packet.Packet;
 import ru.boiko.se.chat.packet.PacketType;
 import ru.boiko.se.chat.users.ActiveUsers;
+import ru.boiko.se.chat.users.User;
 import ru.boiko.se.chat.users.Users;
 
 import java.io.DataInputStream;
@@ -55,7 +56,7 @@ public class BroadcastSender implements Runnable{
     private void logout(Packet packet) {
         Packet packetRequest = new Packet();
         packetRequest.setType(PacketType.MESSAGE);
-        packetRequest.setMessage(ActiveUsers.getInstance().getActiveUsers().get(outgoingMessage) + " отключился от чата");
+        packetRequest.setMessage(getUserNick(outgoingMessage) + " отключился от чата");
         message(packetRequest);
         System.out.println("Клиент " + ActiveUsers.getInstance().getActiveUsers().get(outgoingMessage) + " отключился");
         ActiveUsers.getInstance().getActiveUsers().remove(outgoingMessage);
@@ -87,6 +88,16 @@ public class BroadcastSender implements Runnable{
     private void login(Packet packet) {
         Packet requestPacket = new Packet();
         if (Users.getInstance().check(packet.getLogin(), packet.getPassword())) {
+            for (HashMap.Entry<DataOutputStream, String> entry : ActiveUsers.getInstance().getActiveUsers().entrySet()) {
+                if (entry.getValue().equals(packet.getLogin())) {
+                    requestPacket.setId(packet.getId());
+                    requestPacket.setMessage("Пользователь уже находится в чате");
+                    requestPacket.setType(PacketType.LOGIN);
+                    requestPacket.setSuccess(false);
+                    send(objectMapper.writeValueAsString(requestPacket));
+                    return;
+                }
+            }
             requestPacket.setId(packet.getId());
             requestPacket.setMessage("Авторизация пользователя " + packet.getLogin() + " прошла успешно");
             requestPacket.setType(PacketType.LOGIN);
@@ -98,7 +109,7 @@ public class BroadcastSender implements Runnable{
 
             Packet packetHello = new Packet();
             packetHello.setType(PacketType.MESSAGE);
-            packetHello.setMessage(ActiveUsers.getInstance().getActiveUsers().get(outgoingMessage) + " зашел в чат");
+            packetHello.setMessage(getUserNick(outgoingMessage) + " зашел в чат");
             message(packetHello);
         } else {
             requestPacket.setId(packet.getId());
@@ -115,8 +126,7 @@ public class BroadcastSender implements Runnable{
         requestPacket.setType(PacketType.REFRESH_USER_LIST);
         String message = "";
         for (HashMap.Entry<DataOutputStream, String> entry : ActiveUsers.getInstance().getActiveUsers().entrySet()) {
-
-            message += entry.getValue() + ",,";
+            message += getUserNick(entry.getKey()) + ",,";
         }
         requestPacket.setMessage(message);
         for (HashMap.Entry<DataOutputStream, String> entry : ActiveUsers.getInstance().getActiveUsers().entrySet()) {
@@ -139,6 +149,12 @@ public class BroadcastSender implements Runnable{
     private void send(String message) {
         outgoingMessage.writeUTF(message);
         System.out.println(message);
+    }
+
+    private String getUserNick(DataOutputStream dataOutputStream) {
+        String login = ActiveUsers.getInstance().getActiveUsers().get(dataOutputStream);
+        User user = Users.getInstance().findByLogin(login);
+        return (user.getNick().isEmpty() ? user.getLogin() : user.getNick());
     }
 
 

@@ -72,7 +72,7 @@ public class MessageListener implements Runnable{
         if (packet.getSuccess()) {
             WorkWindows.getInstance().getLoginWindow().setVisible(false);
             WorkWindows.getInstance().getChatWindow().setVisible(true);
-            WorkWindows.getInstance().getChatWindow().setUser(packet.getLogin());
+            WorkWindows.getInstance().getChatWindow().setUser((packet.getNick().isEmpty()) ? packet.getLogin() : packet.getNick());
         } else {
             JOptionPane.showMessageDialog(WorkWindows.getInstance().getLoginWindow(),packet.getMessage());
         }
