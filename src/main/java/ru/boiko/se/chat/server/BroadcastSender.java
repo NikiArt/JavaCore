@@ -16,17 +16,25 @@ public class BroadcastSender implements Runnable{
     private DataInputStream incomingMessage;
     private DataOutputStream outgoingMessage;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final Socket socket;
+
 
     @SneakyThrows
     public BroadcastSender(Socket socket) {
+        this.socket = socket;
         incomingMessage = new DataInputStream(socket.getInputStream());
         outgoingMessage = new DataOutputStream(socket.getOutputStream());
     }
 
     @Override
-    @SneakyThrows
+    //@SneakyThrows
     public void run() {
-        String currentMessage = incomingMessage.readUTF();
+        String currentMessage = "";
+        try {
+            currentMessage = incomingMessage.readUTF();
+        } catch (Exception e) {
+            return;
+        }
         System.out.println(currentMessage);
         if (!currentMessage.isEmpty()) {
             try {
@@ -34,12 +42,27 @@ public class BroadcastSender implements Runnable{
                 if (packet.getType() == PacketType.LOGIN) { login(packet); }
                 if (packet.getType() == PacketType.REGISTRY) { registry(packet); }
                 if (packet.getType() == PacketType.MESSAGE) { message(packet); }
+                if (packet.getType() == PacketType.LOGOUT) { logout(packet); }
             } catch (Exception e) {
                 send(currentMessage);
             }
 
         }
         run();
+    }
+
+    @SneakyThrows
+    private void logout(Packet packet) {
+        Packet packetRequest = new Packet();
+        packetRequest.setType(PacketType.MESSAGE);
+        packetRequest.setMessage(ActiveUsers.getInstance().getActiveUsers().get(outgoingMessage) + " отключился от чата");
+        message(packetRequest);
+        System.out.println("Клиент " + ActiveUsers.getInstance().getActiveUsers().get(outgoingMessage) + " отключился");
+        ActiveUsers.getInstance().getActiveUsers().remove(outgoingMessage);
+        changeUserList();
+        incomingMessage.close();
+        outgoingMessage.close();
+        socket.close();
     }
 
     @SneakyThrows
@@ -70,8 +93,13 @@ public class BroadcastSender implements Runnable{
             requestPacket.setSuccess(true);
             requestPacket.setLogin(packet.getLogin());
             requestPacket.setPassword(packet.getPassword());
-            ActiveUsers.getInstance().getActiveUsers().put(packet.getLogin(), outgoingMessage);
+            ActiveUsers.getInstance().getActiveUsers().put(outgoingMessage, packet.getLogin());
             changeUserList();
+
+            Packet packetHello = new Packet();
+            packetHello.setType(PacketType.MESSAGE);
+            packetHello.setMessage(ActiveUsers.getInstance().getActiveUsers().get(outgoingMessage) + " зашел в чат");
+            message(packetHello);
         } else {
             requestPacket.setId(packet.getId());
             requestPacket.setMessage("Пользователь не найден или пароль введен не верно!");
@@ -86,25 +114,25 @@ public class BroadcastSender implements Runnable{
         Packet requestPacket = new Packet();
         requestPacket.setType(PacketType.REFRESH_USER_LIST);
         String message = "";
-        for (HashMap.Entry<String, DataOutputStream> entry : ActiveUsers.getInstance().getActiveUsers().entrySet()) {
+        for (HashMap.Entry<DataOutputStream, String> entry : ActiveUsers.getInstance().getActiveUsers().entrySet()) {
 
-            message += entry.getKey() + ",,";
+            message += entry.getValue() + ",,";
         }
         requestPacket.setMessage(message);
-        for (HashMap.Entry<String, DataOutputStream> entry : ActiveUsers.getInstance().getActiveUsers().entrySet()) {
-            DataOutputStream currentMessage = entry.getValue();
-            currentMessage.writeUTF(objectMapper.writeValueAsString(requestPacket));
-            System.out.println("Пользователю " + entry.getKey() + " отправлен список пользователей");
+        for (HashMap.Entry<DataOutputStream, String> entry : ActiveUsers.getInstance().getActiveUsers().entrySet()) {
+            DataOutputStream currentConnection = entry.getKey();
+            currentConnection.writeUTF(objectMapper.writeValueAsString(requestPacket));
+            System.out.println("Пользователю " + entry.getValue() + " отправлен список пользователей");
         }
     }
 
     @SneakyThrows
     private void message(Packet packet) {
-        for (HashMap.Entry<String, DataOutputStream> entry : ActiveUsers.getInstance().getActiveUsers().entrySet()) {
-            DataOutputStream currentMessage = entry.getValue();
-            currentMessage.writeUTF(objectMapper.writeValueAsString(packet));
-            System.out.println("Пользователю " + entry.getKey() + " отправлен список пользователей");
+        for (HashMap.Entry<DataOutputStream, String> entry : ActiveUsers.getInstance().getActiveUsers().entrySet()) {
+            DataOutputStream currentConnection = entry.getKey();
+            currentConnection.writeUTF(objectMapper.writeValueAsString(packet));
         }
+        System.out.println(packet.getMessage());
     }
 
     @SneakyThrows

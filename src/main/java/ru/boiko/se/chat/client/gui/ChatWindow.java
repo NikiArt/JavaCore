@@ -7,8 +7,12 @@ import lombok.SneakyThrows;
 import ru.boiko.se.chat.client.MessageSender;
 import ru.boiko.se.chat.packet.Packet;
 import ru.boiko.se.chat.packet.PacketType;
+import ru.boiko.se.chat.users.User;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 @Getter
 @Setter
@@ -23,6 +27,7 @@ public class ChatWindow extends JFrame {
     private  DefaultListModel listModel;
     private MessageSender messageSender;
     private ObjectMapper objectMapper;
+    private String user;
     
     public ChatWindow(MessageSender messageSender) {
         this.messageSender = messageSender;
@@ -35,8 +40,47 @@ public class ChatWindow extends JFrame {
         chatArea = new JTextArea();
         sendButton = new JButton();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
 
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                logoff();
+                e.getWindow().setVisible(false);
+                System.exit(0);
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                logoff();
+                e.getWindow().setVisible(false);
+                System.exit(0);
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        });
         userScroll.setViewportView(userList);
 
         chatArea.setColumns(20);
@@ -78,10 +122,20 @@ public class ChatWindow extends JFrame {
     }
 
     @SneakyThrows
+    private void logoff() {
+        Packet packet = new Packet();
+        packet.setType(PacketType.LOGOUT);
+        packet.setLogin(user);
+        messageSender.send(objectMapper.writeValueAsString(packet));
+        inputText.setText("");
+    }
+
+    @SneakyThrows
     private void send() {
         Packet packet = new Packet();
         packet.setType(PacketType.MESSAGE);
-        packet.setMessage(inputText.getText());
+        packet.setLogin(user);
+        packet.setMessage(user + ": " + inputText.getText());
         messageSender.send(objectMapper.writeValueAsString(packet));
         inputText.setText("");
     }

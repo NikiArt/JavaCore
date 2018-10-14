@@ -11,7 +11,7 @@ import java.util.Map;
 @Setter
 public class ActiveUsers {
     private static ActiveUsers instance;
-    private final Map<String, DataOutputStream> activeUsers = new HashMap<>();
+    private final Map<DataOutputStream, String> activeUsers = new HashMap<>();
 
     private ActiveUsers() {
     }
